@@ -8,13 +8,27 @@ class Form extends Component {
 
   state = {
     startingPoint: '',
-    // destination: '',
+    destination: '',
     waypoints: [
       {
-        location: 'Malbork',
+        id: 0,
+        location: 'Gdansk, Slowackiego',
         stopover: true
       }, {
-        location: 'Sopot',
+        id: 1,
+        location: 'Gdansk, Lostowicka',
+        stopover: true
+      }, {
+        id: 2,
+        location: 'Gdansk, Dworska',
+        stopover: true
+      }, {
+        id: 3,
+        location: 'Gdansk, Rakoczego',
+        stopover: true
+      }, {
+        id: 4,
+        location: 'Gdansk, Polanki',
         stopover: true
       }
     ],
@@ -25,6 +39,15 @@ class Form extends Component {
   handleChange = event =>
     this.setState({
       [event.target.name]: event.target.value
+    })
+
+  addDestination = () =>
+    this.setState({
+      waypoints: this.state.waypoints.concat({
+        id: this.state.waypoints.length || 0,
+        location: this.state.destination,
+        stopover: true
+      })
     })
 
   handleSubmit = event => {
@@ -49,6 +72,7 @@ class Form extends Component {
         origin: startingPoint,
         destination: startingPoint,
         waypoints: waypoints,
+        optimizeWaypoints: true,
         travelMode: 'DRIVING'
       }
       const directionsService = new google.maps.DirectionsService()
@@ -86,6 +110,21 @@ class Form extends Component {
           />
           <button>Submit</button>
         </form>
+        <div>
+          <button
+            onClick={this.addDestination}
+          >
+            Add destination
+          </button>
+          <ul>
+            {
+              this.state.waypoints.map(
+                waypoint =>
+                  <li key={waypoint.id}>{waypoint.location}</li>
+              )
+            }
+          </ul>
+        </div>
         <div id="directionsPanel">
         </div>
       </Fragment>
