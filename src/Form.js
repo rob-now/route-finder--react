@@ -8,7 +8,16 @@ class Form extends Component {
 
   state = {
     startingPoint: '',
-    destination: '',
+    // destination: '',
+    waypoints: [
+      {
+        location: 'Malbork',
+        stopover: true
+      }, {
+        location: 'Sopot',
+        stopover: true
+      }
+    ],
     fetching: false,
     error: null
   }
@@ -27,7 +36,8 @@ class Form extends Component {
     })
 
     const startingPoint = this.state.startingPoint
-    const destination = this.state.destination
+    // const destination = this.state.destination
+    const waypoints = this.state.waypoints
     const fetchingFinished = () =>
       this.setState({
         fetching: false,
@@ -37,17 +47,18 @@ class Form extends Component {
     GoogleMapsLoader.load(function (google) {
       const request = {
         origin: startingPoint,
-        destination: destination,
+        destination: startingPoint,
+        waypoints: waypoints,
         travelMode: 'DRIVING'
       }
       const directionsService = new google.maps.DirectionsService()
-      // const directionsDisplay = new google.maps.DirectionsRenderer()
-      // directionsDisplay.setPanel(document.getElementById('directionsPanel'))
+      const directionsDisplay = new google.maps.DirectionsRenderer()
+      directionsDisplay.setPanel(document.getElementById('directionsPanel'))
       directionsService.route(request, function (result, status) {
         if (status === 'OK') {
           console.log(result)
           fetchingFinished()
-          // directionsDisplay.setDirections(result)
+          directionsDisplay.setDirections(result)
         }
       })
     })
