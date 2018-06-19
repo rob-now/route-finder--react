@@ -33,7 +33,8 @@ class Form extends Component {
       }
     ],
     fetching: false,
-    error: null
+    fetchingError: null,
+    formError: null
   }
 
   handleChange = event =>
@@ -41,22 +42,39 @@ class Form extends Component {
       [event.target.name]: event.target.value
     })
 
-  addDestination = () =>
+  addDestination = () => {
+    if (this.state.destination.trim() === '') {
+      this.setState({
+        formError: new Error('Destination cannot be empty')
+      })
+      return
+    }
+
     this.setState({
       destinations: this.state.destinations.concat({
         id: this.state.destinations.length || 0,
         location: this.state.destination,
         stopover: true
       }),
-      destination: ''
+      destination: '',
+      formError: null
     })
+  }
 
   handleSubmit = event => {
     event.preventDefault()
 
+    if (this.state.startingPoint.trim() === '') {
+      this.setState({
+        formError: new Error('Starting point cannot be empty')
+      })
+      return
+    }
+
     this.setState({
       fetching: true,
-      error: null
+      fetchingError: null,
+      formError: null
     })
 
     const startingPoint = this.state.startingPoint
@@ -75,7 +93,7 @@ class Form extends Component {
     const fetchingFinished = () =>
       this.setState({
         fetching: false,
-        error: null
+        fetchingError: null
       })
 
     GoogleMapsLoader.load(function (google) {
@@ -128,6 +146,7 @@ class Form extends Component {
           <button>Submit</button>
         </form>
         <div>
+          {this.state.formError && <p>{this.state.formError.message}</p>}
           <button
             onClick={this.addDestination}
           >
