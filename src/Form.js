@@ -53,7 +53,7 @@ class Form extends Component {
     this.setState(
       ({destinations}) => ({
         destinations: destinations.concat({
-          id: destinations[destinations.length - 1].id + 1 || 0,
+          id: (destinations.length > 0 && destinations[destinations.length - 1].id + 1) || 0,
           location: this.state.destination,
           stopover: true
         }),
@@ -113,6 +113,7 @@ class Form extends Component {
         destination: startingPoint,
         waypoints: waypoints(),
         optimizeWaypoints: true,
+        provideRouteAlternatives: true,
         travelMode: 'DRIVING'
       }
       const directionsService = new google.maps.DirectionsService()
@@ -174,7 +175,11 @@ class Form extends Component {
                 ({id, location}) =>
                   <div key={id}>
                     <li>{location}</li>
-                    <button onClick={() => this.removeDestination(id)}>Remove</button>
+                    <button
+                      onClick={() => this.removeDestination(id)}
+                    >
+                      Remove
+                    </button>
                   </div>
               )
             }
