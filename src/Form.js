@@ -9,7 +9,7 @@ class Form extends Component {
   state = {
     startingPoint: '',
     destination: '',
-    waypoints: [
+    destinations: [
       {
         id: 0,
         location: 'Gdansk, Slowackiego',
@@ -43,11 +43,12 @@ class Form extends Component {
 
   addDestination = () =>
     this.setState({
-      waypoints: this.state.waypoints.concat({
-        id: this.state.waypoints.length || 0,
+      destinations: this.state.destinations.concat({
+        id: this.state.destinations.length || 0,
         location: this.state.destination,
         stopover: true
-      })
+      }),
+      destination: ''
     })
 
   handleSubmit = event => {
@@ -60,7 +61,17 @@ class Form extends Component {
 
     const startingPoint = this.state.startingPoint
     // const destination = this.state.destination
-    const waypoints = this.state.waypoints
+
+    // Creating waypoints Array from destinations for GoogleMapsLoader
+    const waypoints = () =>
+      this.state.destinations.map(
+        destination =>
+          ({
+            location: destination.location,
+            stopover: destination.stopover
+          })
+      )
+
     const fetchingFinished = () =>
       this.setState({
         fetching: false,
@@ -71,7 +82,7 @@ class Form extends Component {
       const request = {
         origin: startingPoint,
         destination: startingPoint,
-        waypoints: waypoints,
+        waypoints: waypoints(),
         optimizeWaypoints: true,
         travelMode: 'DRIVING'
       }
@@ -86,6 +97,12 @@ class Form extends Component {
         }
       })
     })
+
+    this.setState({
+      startingPoint: ''
+    })
+
+    // console.log('waypoints created', waypoints())
   }
 
   render() {
@@ -118,9 +135,9 @@ class Form extends Component {
           </button>
           <ul>
             {
-              this.state.waypoints.map(
-                waypoint =>
-                  <li key={waypoint.id}>{waypoint.location}</li>
+              this.state.destinations.map(
+                destination =>
+                  <li key={destination.id}>{destination.location}</li>
               )
             }
           </ul>
