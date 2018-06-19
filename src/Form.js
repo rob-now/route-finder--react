@@ -1,13 +1,13 @@
 import React, {Component} from 'react';
 
-class App extends Component {
+class Form extends Component {
   render() {
     return (
       <div>
-
+        test
       </div>
     );
   }
 }
 
-export default App;
+export default Form;
