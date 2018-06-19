@@ -50,16 +50,27 @@ class Form extends Component {
       return
     }
 
-    this.setState({
-      destinations: this.state.destinations.concat({
-        id: this.state.destinations.length || 0,
-        location: this.state.destination,
-        stopover: true
-      }),
-      destination: '',
-      formError: null
-    })
+    this.setState(
+      ({destinations}) => ({
+        destinations: destinations.concat({
+          id: destinations[destinations.length - 1].id + 1 || 0,
+          location: this.state.destination,
+          stopover: true
+        }),
+        destination: '',
+        formError: null
+      })
+    )
   }
+
+  removeDestination = destinationId =>
+    this.setState(
+      ({destinations}) => ({
+        destinations: destinations.filter(
+          ({id}) => id !== destinationId
+        )
+      })
+    )
 
   handleSubmit = event => {
     event.preventDefault()
@@ -106,7 +117,8 @@ class Form extends Component {
       }
       const directionsService = new google.maps.DirectionsService()
       const directionsDisplay = new google.maps.DirectionsRenderer()
-      directionsDisplay.setPanel(document.getElementById('directionsPanel'))
+      let directionsPanel = document.getElementById('directionsPanel')
+      directionsDisplay.setPanel(directionsPanel)
       directionsService.route(request, function (result, status) {
         if (status === 'OK') {
           console.log(result)
@@ -145,8 +157,12 @@ class Form extends Component {
           />
           <button>Submit</button>
         </form>
+
         <div>
           {this.state.formError && <p>{this.state.formError.message}</p>}
+        </div>
+
+        <div>
           <button
             onClick={this.addDestination}
           >
@@ -155,12 +171,16 @@ class Form extends Component {
           <ul>
             {
               this.state.destinations.map(
-                destination =>
-                  <li key={destination.id}>{destination.location}</li>
+                ({id, location}) =>
+                  <div key={id}>
+                    <li>{location}</li>
+                    <button onClick={() => this.removeDestination(id)}>Remove</button>
+                  </div>
               )
             }
           </ul>
         </div>
+
         <div id="directionsPanel">
         </div>
       </Fragment>
