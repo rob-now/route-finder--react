@@ -81,8 +81,8 @@ class Form extends Component {
     )
 
   displayDirections = (result, resultAlt) => {
-    const {startingPoint, optimization, totalDistance, totalDistanceAlt, totalDuration, totalDurationAlt, fetchingResult, fetchingResultAlt} = this.state
-    console.log('Directions in displayDirections:', result, fetchingResult, fetchingResultAlt, totalDistance, totalDistanceAlt, totalDuration, totalDurationAlt)
+    const {optimization, totalDistance, totalDistanceAlt, totalDuration, totalDurationAlt} = this.state
+    console.log('Directions in displayDirections:', result, resultAlt, totalDistance, totalDistanceAlt, totalDuration, totalDurationAlt)
 
     GoogleMapsLoader.load(function (google) {
       const directionsDisplay = new google.maps.DirectionsRenderer()
@@ -115,7 +115,7 @@ class Form extends Component {
       formError: null
     })
 
-    const {startingPoint, optimization, totalDistance, totalDistanceAlt, totalDuration, totalDurationAlt} = this.state
+    const {startingPoint, totalDistance, totalDistanceAlt, totalDuration, totalDurationAlt} = this.state
 
     // Creating waypoints Array for Destinations API
     const directionsWaypoints = () =>
@@ -171,7 +171,7 @@ class Form extends Component {
       )
     }
 
-    const displayDirections = (result,resultAlt) =>
+    const displayDirections = (result, resultAlt) =>
       this.displayDirections(result, resultAlt)
 
     const putFetchingResultToState = result =>
@@ -190,7 +190,7 @@ class Form extends Component {
         destination: startingPoint,
         waypoints: directionsWaypoints(),
         optimizeWaypoints: true,
-        provideRouteAlternatives: true,
+        // provideRouteAlternatives: true,
         avoidHighways: false,
         travelMode: 'DRIVING'
       }
@@ -203,16 +203,10 @@ class Form extends Component {
 
       directionsService.route(request, function (result, status) {
         if (status === 'OK') {
-          // fetchingIsFinished()
           directionsResult(result)
           console.log('Directions:', result, totalDistance, totalDistanceAlt, totalDuration, totalDurationAlt)
           putFetchingResultToState(result)
 
-          // displayDirections &&
-          // if ((optimization === 'shortest' && totalDistance <= totalDistanceAlt)
-          //   (optimization === 'fastest' && totalDuration <= totalDurationAlt)) {
-          //   directionsDisplay.setDirections(result)
-          // }
           directionsService.route(requestAlt, function (resultAlt, status) {
             if (status === 'OK') {
               fetchingIsFinished()
@@ -224,8 +218,6 @@ class Form extends Component {
           })
         }
       })
-
-
     })
 
     this.setState({
