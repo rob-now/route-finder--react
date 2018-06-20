@@ -41,12 +41,10 @@ export class FormProvider extends Component {
     totalDistanceAlt: null,
     totalDurationAlt: null,
     optimization: 'shortest',
-    fetchingResult: null,
-    fetchingResultAlt: null,
+    fetchedResult: null,
+    fetchedResultAlt: null,
     fetching: false,
-    fetchingError: null,
     formError: null,
-
 
     handleChange: event =>
       this.setState({
@@ -163,11 +161,11 @@ export class FormProvider extends Component {
       const putFetchingResultToState = (fetcher, result) =>
         fetcher === 'firstFetcher' ?
           this.setState({
-            fetchingResult: result
+            fetchedResult: result
           }) :
           fetcher === 'altFetcher' ?
             this.setState({
-              fetchingResultAlt: result
+              fetchedResultAlt: result
             }) :
             undefined
 
