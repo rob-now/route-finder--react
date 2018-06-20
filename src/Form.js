@@ -78,13 +78,17 @@ class Form extends Component {
       })
     )
 
-  displayDirections = result =>
+  displayDirections = result => {
+    const {startingPoint, optimization, totalDistance, totalDistanceAlt, totalDuration, totalDurationAlt} = this.state
+    console.log('Directions in displayDirections:', result, totalDistance, totalDistanceAlt, totalDuration, totalDurationAlt)
+
     GoogleMapsLoader.load(function (google) {
       const directionsDisplay = new google.maps.DirectionsRenderer()
       const directionsPanel = document.getElementById('directionsPanel')
       directionsDisplay.setPanel(directionsPanel)
       directionsDisplay.setDirections(result)
     })
+  }
 
 
   handleSubmit = event => {
@@ -162,10 +166,6 @@ class Form extends Component {
     const displayDirections = result =>
       this.displayDirections(result)
 
-    // Directions service
-    // const getRoute = alt =>
-
-    // First fetch
     GoogleMapsLoader.load(function (google) {
       const request = {
         origin: startingPoint,
@@ -176,24 +176,19 @@ class Form extends Component {
         avoidHighways: false,
         travelMode: 'DRIVING'
       }
+      const requestAlt = {
+        ...request,
+        avoidHighways: true,
+      }
+
       const directionsService = new google.maps.DirectionsService()
-      const directionsDisplay = new google.maps.DirectionsRenderer()
-      let directionsPanel = document.getElementById('directionsPanel')
-      directionsDisplay.setPanel(directionsPanel)
+
       directionsService.route(request, function (result, status) {
         if (status === 'OK') {
           fetchingIsFinished()
           directionsResult(result)
-          console.log('Directions:', result)
+          console.log('Directions:', result, totalDistance, totalDistanceAlt, totalDuration, totalDurationAlt)
           displayDirections(result)
-          // const route = result.routes[0].legs
-          // route.map(
-          //   leg =>
-          //     calculateDistanceAndDuration(
-          //       Math.round(leg.distance.value / 1000),
-          //       Math.round(leg.duration.value / 60)
-          //     )
-          // )
 
           // displayDirections &&
           // if ((optimization === 'shortest' && totalDistance <= totalDistanceAlt)
@@ -202,68 +197,20 @@ class Form extends Component {
           // }
         }
       })
-    })
 
-    // Alt fetch
-    GoogleMapsLoader.load(function (google) {
-      const request = {
-        origin: startingPoint,
-        destination: startingPoint,
-        waypoints: directionsWaypoints(),
-        optimizeWaypoints: true,
-        provideRouteAlternatives: true,
-        avoidHighways: true,
-        travelMode: 'DRIVING'
-      }
-      const directionsService = new google.maps.DirectionsService()
-      // const directionsDisplay = new google.maps.DirectionsRenderer()
-      // let directionsPanel = document.getElementById('directionsPanel')
-      // directionsDisplay.setPanel(directionsPanel)
-      directionsService.route(request, function (result, status) {
+      directionsService.route(requestAlt, function (resultAlt, status) {
         if (status === 'OK') {
           fetchingIsFinished()
-          directionsResultAlt(result)
-          console.log('DirectionsAlt:', result)
+          directionsResultAlt(resultAlt)
+          console.log('DirectionsAlt:', resultAlt)
+          displayDirections(resultAlt)
         }
       })
     })
 
-
-    // getRoute(true)
-
-    //Distance matrix service
-    // GoogleMapsLoader.load(function (google) {
-    //   const origin1 = 'Gdansk, Poland';
-    //   const origin2 = new google.maps.LatLng(55.930385, -3.118425);
-    //   const destinationA = 'Stockholm, Sweden';
-    //   const destinationB = 'Gdynia, Poland';
-    //
-    //   const service = new google.maps.DistanceMatrixService();
-    //   service.getDistanceMatrix(
-    //     {
-    //       origins: [origin1],
-    //       destinations: [destinationA, destinationB],
-    //       travelMode: 'DRIVING',
-    //       // transitOptions: TransitOptions,
-    //       // drivingOptions: DrivingOptions,
-    //       // unitSystem: UnitSystem,
-    //       // avoidHighways: Boolean,
-    //       // avoidTolls: Boolean,
-    //     },
-    //     function (result, status) {
-    //       // See Parsing the Results for
-    //       // the basics of a callback function.
-    //       if (status === 'OK') {
-    //         console.log('Matrix', result)
-    //       }
-    //     });
-    // })
-
     this.setState({
       startingPoint: ''
     })
-
-    // console.log('waypoints created', waypoints())
   }
 
   render() {
