@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 
-class FormView extends Component {
+class Form extends Component {
   render(){
     return (
       <div>
@@ -35,4 +35,4 @@ class FormView extends Component {
   }
 }
 
-export default FormView
+export default Form

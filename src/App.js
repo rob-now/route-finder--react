@@ -1,11 +1,12 @@
 import React, {Component, Fragment} from 'react';
 import GoogleMapsLoader from 'google-maps'
-import FormView from "./FormView";
+import Form from "./components/Form";
+import FormErrorsView from "./components/FormErrorsView";
 
 const apiKey = 'AIzaSyC_1ShOt4e8e2kogxZ_rR1VEzHdUBnFjMo'
 GoogleMapsLoader.KEY = apiKey
 
-class Form extends Component {
+class App extends Component {
 
   state = {
     startingPoint: '',
@@ -231,7 +232,7 @@ class Form extends Component {
     console.log('totalDistance', this.state.totalDistance, 'totalDuration', this.state.totalDuration)
     return (
       <Fragment>
-        <FormView
+        <Form
           startingPoint={this.state.startingPoint}
           destination={this.state.destination}
           handleChange={this.handleChange}
@@ -239,9 +240,10 @@ class Form extends Component {
           handleSubmit={this.handleSubmit}
         />
 
-        <div>
-          {this.state.formError && <p>{this.state.formError.message}</p>}
-        </div>
+        <FormErrorsView
+          formError={this.state.formError}
+        />
+
 
         <div>
           <ul>
@@ -268,4 +270,4 @@ class Form extends Component {
   }
 }
 
-export default Form;
+export default App;
