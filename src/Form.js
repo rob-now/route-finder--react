@@ -32,6 +32,8 @@ class Form extends Component {
         stopover: true
       }
     ],
+    totalDistance: 0,
+    totalDuration: 0,
     fetching: false,
     fetchingError: null,
     formError: null
@@ -88,8 +90,7 @@ class Form extends Component {
       formError: null
     })
 
-    const startingPoint = this.state.startingPoint
-    // const destination = this.state.destination
+    const {startingPoint} = this.state
 
     // Creating waypoints Array from destinations for GoogleMapsLoader
     const waypoints = () =>
@@ -101,7 +102,14 @@ class Form extends Component {
           })
       )
 
-    const fetchingFinished = () =>
+    const calculateDistanceAndDuration = (distance, duration) => {
+      this.setState({
+        totalDistance: this.state.totalDistance + distance,
+        totalDuration: this.state.totalDuration + duration
+      })
+      console.log('typ', typeof distance)
+    }
+    const fetchingIsFinished = () =>
       this.setState({
         fetching: false,
         fetchingError: null
@@ -112,7 +120,7 @@ class Form extends Component {
         origin: startingPoint,
         destination: startingPoint,
         waypoints: waypoints(),
-        optimizeWaypoints: true,
+        optimizeWaypoints: false,
         provideRouteAlternatives: true,
         travelMode: 'DRIVING'
       }
@@ -123,7 +131,16 @@ class Form extends Component {
       directionsService.route(request, function (result, status) {
         if (status === 'OK') {
           console.log(result)
-          fetchingFinished()
+
+          const route = result.routes[0].legs
+          route.map(
+            leg =>
+              calculateDistanceAndDuration(
+                Math.round(leg.distance.value / 1000),
+                Math.round(leg.duration.value / 60))
+          )
+
+          fetchingIsFinished()
           directionsDisplay.setDirections(result)
         }
       })
