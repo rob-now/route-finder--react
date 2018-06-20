@@ -12,7 +12,7 @@ class Form extends Component {
     destinations: [
       {
         id: 0,
-        location: 'Gdansk, Slowackiego',
+        location: 'Gdansk, Grunwaldzka 141',
         stopover: true
       }, {
         id: 1,
@@ -32,8 +32,12 @@ class Form extends Component {
         stopover: true
       }
     ],
-    totalDistance: 0,
-    totalDuration: 0,
+    totalDistance: null,
+    totalDuration: null,
+    totalDistanceAlt: null,
+    totalDurationAlt: null,
+    optimization: 'shortest',
+    displayDirections: false,
     fetching: false,
     fetchingError: null,
     formError: null
@@ -74,6 +78,15 @@ class Form extends Component {
       })
     )
 
+  displayDirections = result =>
+    GoogleMapsLoader.load(function (google) {
+      const directionsDisplay = new google.maps.DirectionsRenderer()
+      const directionsPanel = document.getElementById('directionsPanel')
+      directionsDisplay.setPanel(directionsPanel)
+      directionsDisplay.setDirections(result)
+    })
+
+
   handleSubmit = event => {
     event.preventDefault()
 
@@ -90,10 +103,10 @@ class Form extends Component {
       formError: null
     })
 
-    const {startingPoint} = this.state
+    const {startingPoint, optimization, totalDistance, totalDistanceAlt, totalDuration, totalDurationAlt} = this.state
 
-    // Creating waypoints Array from destinations for GoogleMapsLoader
-    const waypoints = () =>
+    // Creating waypoints Array for Destinations API
+    const directionsWaypoints = () =>
       this.state.destinations.map(
         destination =>
           ({
@@ -107,21 +120,60 @@ class Form extends Component {
         totalDistance: this.state.totalDistance + distance,
         totalDuration: this.state.totalDuration + duration
       })
-      console.log('typ', typeof distance)
+      // console.log('distance', distance)
     }
+
+    const calculateDistanceAndDurationAlt = (distance, duration) => {
+      this.setState({
+        totalDistanceAlt: this.state.totalDistanceAlt + distance,
+        totalDurationAlt: this.state.totalDurationAlt + duration
+      })
+      // console.log('distanceAlt', distance)
+    }
+
     const fetchingIsFinished = () =>
       this.setState({
         fetching: false,
         fetchingError: null
       })
 
+    const directionsResult = result => {
+      const route = result.routes[0].legs
+      route.map(
+        leg =>
+          calculateDistanceAndDuration(
+            Math.round(leg.distance.value / 1000),
+            Math.round(leg.duration.value / 60)
+          )
+      )
+    }
+
+    const directionsResultAlt = result => {
+      const route = result.routes[0].legs
+      route.map(
+        leg =>
+          calculateDistanceAndDurationAlt(
+            Math.round(leg.distance.value / 1000),
+            Math.round(leg.duration.value / 60)
+          )
+      )
+    }
+
+    const displayDirections = result =>
+      this.displayDirections(result)
+
+    // Directions service
+    // const getRoute = alt =>
+
+    // First fetch
     GoogleMapsLoader.load(function (google) {
       const request = {
         origin: startingPoint,
         destination: startingPoint,
-        waypoints: waypoints(),
-        optimizeWaypoints: false,
+        waypoints: directionsWaypoints(),
+        optimizeWaypoints: true,
         provideRouteAlternatives: true,
+        avoidHighways: false,
         travelMode: 'DRIVING'
       }
       const directionsService = new google.maps.DirectionsService()
@@ -130,21 +182,82 @@ class Form extends Component {
       directionsDisplay.setPanel(directionsPanel)
       directionsService.route(request, function (result, status) {
         if (status === 'OK') {
-          console.log(result)
-
-          const route = result.routes[0].legs
-          route.map(
-            leg =>
-              calculateDistanceAndDuration(
-                Math.round(leg.distance.value / 1000),
-                Math.round(leg.duration.value / 60))
-          )
-
           fetchingIsFinished()
-          directionsDisplay.setDirections(result)
+          directionsResult(result)
+          console.log('Directions:', result)
+          displayDirections(result)
+          // const route = result.routes[0].legs
+          // route.map(
+          //   leg =>
+          //     calculateDistanceAndDuration(
+          //       Math.round(leg.distance.value / 1000),
+          //       Math.round(leg.duration.value / 60)
+          //     )
+          // )
+
+          // displayDirections &&
+          // if ((optimization === 'shortest' && totalDistance <= totalDistanceAlt)
+          //   (optimization === 'fastest' && totalDuration <= totalDurationAlt)) {
+          //   directionsDisplay.setDirections(result)
+          // }
         }
       })
     })
+
+    // Alt fetch
+    GoogleMapsLoader.load(function (google) {
+      const request = {
+        origin: startingPoint,
+        destination: startingPoint,
+        waypoints: directionsWaypoints(),
+        optimizeWaypoints: true,
+        provideRouteAlternatives: true,
+        avoidHighways: true,
+        travelMode: 'DRIVING'
+      }
+      const directionsService = new google.maps.DirectionsService()
+      // const directionsDisplay = new google.maps.DirectionsRenderer()
+      // let directionsPanel = document.getElementById('directionsPanel')
+      // directionsDisplay.setPanel(directionsPanel)
+      directionsService.route(request, function (result, status) {
+        if (status === 'OK') {
+          fetchingIsFinished()
+          directionsResultAlt(result)
+          console.log('DirectionsAlt:', result)
+        }
+      })
+    })
+
+
+    // getRoute(true)
+
+    //Distance matrix service
+    // GoogleMapsLoader.load(function (google) {
+    //   const origin1 = 'Gdansk, Poland';
+    //   const origin2 = new google.maps.LatLng(55.930385, -3.118425);
+    //   const destinationA = 'Stockholm, Sweden';
+    //   const destinationB = 'Gdynia, Poland';
+    //
+    //   const service = new google.maps.DistanceMatrixService();
+    //   service.getDistanceMatrix(
+    //     {
+    //       origins: [origin1],
+    //       destinations: [destinationA, destinationB],
+    //       travelMode: 'DRIVING',
+    //       // transitOptions: TransitOptions,
+    //       // drivingOptions: DrivingOptions,
+    //       // unitSystem: UnitSystem,
+    //       // avoidHighways: Boolean,
+    //       // avoidTolls: Boolean,
+    //     },
+    //     function (result, status) {
+    //       // See Parsing the Results for
+    //       // the basics of a callback function.
+    //       if (status === 'OK') {
+    //         console.log('Matrix', result)
+    //       }
+    //     });
+    // })
 
     this.setState({
       startingPoint: ''
@@ -154,6 +267,7 @@ class Form extends Component {
   }
 
   render() {
+    console.log('totalDistance', this.state.totalDistance, 'totalDuration', this.state.totalDuration)
     return (
       <Fragment>
         <form onSubmit={this.handleSubmit}>
