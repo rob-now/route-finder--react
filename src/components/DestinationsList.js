@@ -1,7 +1,8 @@
 import React, {Component} from 'react'
+import {withForm} from '../contexts/Form'
 
 class DestinationsList extends Component {
-  render(){
+  render() {
     return (
       <div>
         <ul>
@@ -11,7 +12,7 @@ class DestinationsList extends Component {
                 <div key={id}>
                   <li>{location}</li>
                   <button
-                    onClick={() => this.removeDestination(id)}
+                    onClick={() => this.props.removeDestination(id)}
                   >
                     Remove
                   </button>
@@ -24,4 +25,4 @@ class DestinationsList extends Component {
   }
 }
 
-export default DestinationsList
+export default withForm(DestinationsList)

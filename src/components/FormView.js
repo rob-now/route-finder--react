@@ -1,7 +1,8 @@
 import React, {Component} from 'react'
+import {withForm} from '../contexts/Form'
 
-class Form extends Component {
-  render(){
+class FormView extends Component {
+  render() {
     return (
       <div>
         <input
@@ -35,4 +36,4 @@ class Form extends Component {
   }
 }
 
-export default Form
+export default withForm(FormView)

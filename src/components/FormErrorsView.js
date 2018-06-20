@@ -1,7 +1,8 @@
 import React, {Component} from 'react'
+import {withForm} from '../contexts/Form'
 
 class FormErrorsView extends Component {
-  render(){
+  render() {
     return (
       <div>
         {this.props.formError && <p>{this.props.formError.message}</p>}
@@ -10,4 +11,4 @@ class FormErrorsView extends Component {
   }
 }
 
-export default FormErrorsView
+export default withForm(FormErrorsView)
