@@ -50,10 +50,12 @@ class Form extends Component {
       [event.target.name]: event.target.value
     })
 
-  addDestination = () => {
+  addDestination = event => {
+    event.preventDefault()
+
     if (this.state.destination.trim() === '') {
       this.setState({
-        formError: new Error('Destination cannot be empty')
+        formError: new Error('Destination cannot be empty.')
       })
       return
     }
@@ -98,13 +100,12 @@ class Form extends Component {
     })
   }
 
-
   handleSubmit = event => {
     event.preventDefault()
 
     if (this.state.startingPoint.trim() === '') {
       this.setState({
-        formError: new Error('Starting point cannot be empty')
+        formError: new Error('Starting point cannot be empty.')
       })
       return
     }
@@ -229,7 +230,7 @@ class Form extends Component {
     console.log('totalDistance', this.state.totalDistance, 'totalDuration', this.state.totalDuration)
     return (
       <Fragment>
-        <form onSubmit={this.handleSubmit}>
+        <div>
           <input
             type="text"
             name="startingPoint"
@@ -246,19 +247,24 @@ class Form extends Component {
             value={this.state.destination}
             onChange={this.handleChange}
           />
-          <button>Submit</button>
-        </form>
+          <button
+            onClick={this.addDestination}
+          >
+            Add destination
+          </button>
+          <button
+            onClick={this.handleSubmit}
+          >
+            Submit
+          </button>
+        </div>
+
 
         <div>
           {this.state.formError && <p>{this.state.formError.message}</p>}
         </div>
 
         <div>
-          <button
-            onClick={this.addDestination}
-          >
-            Add destination
-          </button>
           <ul>
             {
               this.state.destinations.map(
