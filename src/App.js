@@ -1,11 +1,11 @@
-import React, {Component, Fragment} from 'react';
+import React, {Component, Fragment} from 'react'
 import GoogleMapsLoader from 'google-maps'
-import Form from "./components/Form";
-import FormErrorsView from "./components/FormErrorsView";
-import DestinationsList from "./components/DestinationsList";
-import DirectionsView from "./components/DirectionsView";
+import Form from './components/Form'
+import FormErrorsView from './components/FormErrorsView'
+import DestinationsList from './components/DestinationsList'
+import DirectionsView from './components/DirectionsView'
+import {apiKey} from './api/ApiKey'
 
-const apiKey = 'AIzaSyC_1ShOt4e8e2kogxZ_rR1VEzHdUBnFjMo'
 GoogleMapsLoader.KEY = apiKey
 
 class App extends Component {
@@ -231,7 +231,7 @@ class App extends Component {
   }
 
   render() {
-    console.log('totalDistance', this.state.totalDistance, 'totalDuration', this.state.totalDuration)
+    // console.log('totalDistance', this.state.totalDistance, 'totalDuration', this.state.totalDuration)
     return (
       <Fragment>
         <Form
