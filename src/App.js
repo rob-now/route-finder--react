@@ -3,6 +3,7 @@ import GoogleMapsLoader from 'google-maps'
 import Form from "./components/Form";
 import FormErrorsView from "./components/FormErrorsView";
 import DestinationsList from "./components/DestinationsList";
+import DirectionsView from "./components/DirectionsView";
 
 const apiKey = 'AIzaSyC_1ShOt4e8e2kogxZ_rR1VEzHdUBnFjMo'
 GoogleMapsLoader.KEY = apiKey
@@ -240,17 +241,13 @@ class App extends Component {
           addDestination={this.addDestination}
           handleSubmit={this.handleSubmit}
         />
-
         <FormErrorsView
           formError={this.state.formError}
         />
-
         <DestinationsList
           destinations={this.state.destinations}
         />
-
-        <div id="directionsPanel">
-        </div>
+        <DirectionsView/>
       </Fragment>
     );
   }
