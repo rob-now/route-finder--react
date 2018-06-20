@@ -2,6 +2,7 @@ import React, {Component, Fragment} from 'react';
 import GoogleMapsLoader from 'google-maps'
 import Form from "./components/Form";
 import FormErrorsView from "./components/FormErrorsView";
+import DestinationsList from "./components/DestinationsList";
 
 const apiKey = 'AIzaSyC_1ShOt4e8e2kogxZ_rR1VEzHdUBnFjMo'
 GoogleMapsLoader.KEY = apiKey
@@ -244,24 +245,9 @@ class App extends Component {
           formError={this.state.formError}
         />
 
-
-        <div>
-          <ul>
-            {
-              this.state.destinations.map(
-                ({id, location}) =>
-                  <div key={id}>
-                    <li>{location}</li>
-                    <button
-                      onClick={() => this.removeDestination(id)}
-                    >
-                      Remove
-                    </button>
-                  </div>
-              )
-            }
-          </ul>
-        </div>
+        <DestinationsList
+          destinations={this.state.destinations}
+        />
 
         <div id="directionsPanel">
         </div>
