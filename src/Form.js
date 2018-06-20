@@ -38,6 +38,8 @@ class Form extends Component {
     totalDurationAlt: null,
     optimization: 'shortest',
     displayDirections: false,
+    fetchingResult: null,
+    fetchingResultAlt: null,
     fetching: false,
     fetchingError: null,
     formError: null
@@ -78,15 +80,21 @@ class Form extends Component {
       })
     )
 
-  displayDirections = result => {
-    const {startingPoint, optimization, totalDistance, totalDistanceAlt, totalDuration, totalDurationAlt} = this.state
-    console.log('Directions in displayDirections:', result, totalDistance, totalDistanceAlt, totalDuration, totalDurationAlt)
+  displayDirections = (result, resultAlt) => {
+    const {startingPoint, optimization, totalDistance, totalDistanceAlt, totalDuration, totalDurationAlt, fetchingResult, fetchingResultAlt} = this.state
+    console.log('Directions in displayDirections:', result, fetchingResult, fetchingResultAlt, totalDistance, totalDistanceAlt, totalDuration, totalDurationAlt)
 
     GoogleMapsLoader.load(function (google) {
       const directionsDisplay = new google.maps.DirectionsRenderer()
       const directionsPanel = document.getElementById('directionsPanel')
       directionsDisplay.setPanel(directionsPanel)
-      directionsDisplay.setDirections(result)
+      if ((optimization === 'shortest' && totalDistance <= totalDistanceAlt) ||
+        (optimization === 'fastest' && totalDuration <= totalDurationAlt)) {
+        directionsDisplay.setDirections(result)
+        console.log('fetchingResult', result)
+      } else {
+        directionsDisplay.setDirections(resultAlt)
+      }
     })
   }
 
@@ -163,8 +171,18 @@ class Form extends Component {
       )
     }
 
-    const displayDirections = result =>
-      this.displayDirections(result)
+    const displayDirections = (result,resultAlt) =>
+      this.displayDirections(result, resultAlt)
+
+    const putFetchingResultToState = result =>
+      this.setState({
+        fetchingResult: result
+      })
+
+    const putFetchingResultAltToState = resultAlt =>
+      this.setState({
+        fetchingResultAlt: resultAlt
+      })
 
     GoogleMapsLoader.load(function (google) {
       const request = {
@@ -185,27 +203,29 @@ class Form extends Component {
 
       directionsService.route(request, function (result, status) {
         if (status === 'OK') {
-          fetchingIsFinished()
+          // fetchingIsFinished()
           directionsResult(result)
           console.log('Directions:', result, totalDistance, totalDistanceAlt, totalDuration, totalDurationAlt)
-          displayDirections(result)
+          putFetchingResultToState(result)
 
           // displayDirections &&
           // if ((optimization === 'shortest' && totalDistance <= totalDistanceAlt)
           //   (optimization === 'fastest' && totalDuration <= totalDurationAlt)) {
           //   directionsDisplay.setDirections(result)
           // }
+          directionsService.route(requestAlt, function (resultAlt, status) {
+            if (status === 'OK') {
+              fetchingIsFinished()
+              directionsResultAlt(resultAlt)
+              console.log('DirectionsAlt:', resultAlt)
+              putFetchingResultAltToState(resultAlt)
+              displayDirections(result, resultAlt)
+            }
+          })
         }
       })
 
-      directionsService.route(requestAlt, function (resultAlt, status) {
-        if (status === 'OK') {
-          fetchingIsFinished()
-          directionsResultAlt(resultAlt)
-          console.log('DirectionsAlt:', resultAlt)
-          displayDirections(resultAlt)
-        }
-      })
+
     })
 
     this.setState({
