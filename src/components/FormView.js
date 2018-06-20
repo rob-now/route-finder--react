@@ -26,6 +26,24 @@ class FormView extends Component {
         >
           Add destination
         </button>
+        <input
+          id="radio-fastest"
+          type="radio"
+          name="optimization"
+          checked={this.props.optimization === 'fastest'}
+          value='fastest'
+          onChange={this.props.handleChange}
+        />
+        <label htmlFor="radio-fastest">Fastest</label>
+        <input
+          id="radio-shortest"
+          type="radio"
+          name="optimization"
+          checked={this.props.optimization === 'shortest'}
+          value="shortest"
+          onChange={this.props.handleChange}
+        />
+        <label htmlFor="radio-shortest">Shortest</label>
         <button
           onClick={this.props.handleSubmit}
         >

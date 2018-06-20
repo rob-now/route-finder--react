@@ -40,7 +40,7 @@ export class FormProvider extends Component {
     totalDuration: null,
     totalDistanceAlt: null,
     totalDurationAlt: null,
-    optimization: 'shortest',
+    optimization: '',
     fetchedResult: null,
     fetchedResultAlt: null,
     fetching: false,
@@ -89,6 +89,7 @@ export class FormProvider extends Component {
       GoogleMapsLoader.load(function (google) {
         const directionsDisplay = new google.maps.DirectionsRenderer()
         const directionsPanel = document.getElementById('directionsPanel')
+        directionsPanel.innerText = ''
         directionsDisplay.setPanel(directionsPanel)
         if ((optimization === 'shortest' && totalDistance <= totalDistanceAlt) ||
           (optimization === 'fastest' && totalDuration <= totalDurationAlt)) {
@@ -102,11 +103,18 @@ export class FormProvider extends Component {
     handleSubmit: event => {
       event.preventDefault()
 
-      const {startingPoint, destinations, totalDistance, totalDistanceAlt, totalDuration, totalDurationAlt} = this.state
+      const {startingPoint, destinations, optimization, totalDistance, totalDistanceAlt, totalDuration, totalDurationAlt} = this.state
 
       if (startingPoint.trim() === '') {
         this.setState({
           formError: new Error('Starting point cannot be empty.')
+        })
+        return
+      }
+
+      if (optimization.trim() === '') {
+        this.setState({
+          formError: new Error('You have to choose route optimization (fastest or shortest).')
         })
         return
       }
