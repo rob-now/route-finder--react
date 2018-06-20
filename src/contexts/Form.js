@@ -41,7 +41,6 @@ export class FormProvider extends Component {
     totalDistanceAlt: null,
     totalDurationAlt: null,
     optimization: 'shortest',
-    // displayDirections: false,
     fetchingResult: null,
     fetchingResultAlt: null,
     fetching: false,
@@ -88,7 +87,6 @@ export class FormProvider extends Component {
 
     displayDirections: (result, resultAlt) => {
       const {optimization, totalDistance, totalDistanceAlt, totalDuration, totalDurationAlt} = this.state
-      console.log('Directions in displayDirections:', result, resultAlt, totalDistance, totalDistanceAlt, totalDuration, totalDurationAlt)
 
       GoogleMapsLoader.load(function (google) {
         const directionsDisplay = new google.maps.DirectionsRenderer()
@@ -97,7 +95,6 @@ export class FormProvider extends Component {
         if ((optimization === 'shortest' && totalDistance <= totalDistanceAlt) ||
           (optimization === 'fastest' && totalDuration <= totalDurationAlt)) {
           directionsDisplay.setDirections(result)
-          console.log('fetchingResult', result)
         } else {
           directionsDisplay.setDirections(resultAlt)
         }
@@ -107,7 +104,9 @@ export class FormProvider extends Component {
     handleSubmit: event => {
       event.preventDefault()
 
-      if (this.state.startingPoint.trim() === '') {
+      const {startingPoint, destinations, totalDistance, totalDistanceAlt, totalDuration, totalDurationAlt} = this.state
+
+      if (startingPoint.trim() === '') {
         this.setState({
           formError: new Error('Starting point cannot be empty.')
         })
@@ -120,11 +119,9 @@ export class FormProvider extends Component {
         formError: null
       })
 
-      const {startingPoint, totalDistance, totalDistanceAlt, totalDuration, totalDurationAlt} = this.state
-
       // Creating waypoints Array for Destinations API
       const directionsWaypoints = () =>
-        this.state.destinations.map(
+        destinations.map(
           destination =>
             ({
               location: destination.location,
@@ -132,21 +129,18 @@ export class FormProvider extends Component {
             })
         )
 
-      const calculateDistanceAndDuration = (distance, duration) => {
-        this.setState({
-          totalDistance: this.state.totalDistance + distance,
-          totalDuration: this.state.totalDuration + duration
-        })
-        // console.log('distance', distance)
-      }
-
-      const calculateDistanceAndDurationAlt = (distance, duration) => {
-        this.setState({
-          totalDistanceAlt: this.state.totalDistanceAlt + distance,
-          totalDurationAlt: this.state.totalDurationAlt + duration
-        })
-        // console.log('distanceAlt', distance)
-      }
+      const calculateDistanceAndDuration = (fetcher, distance, duration) =>
+        fetcher === 'firstFetcher' ?
+          this.setState({
+            totalDistance: totalDistance + distance,
+            totalDuration: totalDuration + duration
+          }) :
+          fetcher === 'altFetcher' ?
+            this.setState({
+              totalDistanceAlt: totalDistanceAlt + distance,
+              totalDurationAlt: totalDurationAlt + duration
+            }) :
+            undefined
 
       const fetchingIsFinished = () =>
         this.setState({
@@ -154,40 +148,31 @@ export class FormProvider extends Component {
           fetchingError: null
         })
 
-      const directionsResult = result => {
+      const getDistanceAndDurationValues = (fetcher, result) => {
         const route = result.routes[0].legs
         route.map(
           leg =>
             calculateDistanceAndDuration(
+              fetcher,
               Math.round(leg.distance.value / 1000),
               Math.round(leg.duration.value / 60)
             )
         )
       }
 
-      const directionsResultAlt = result => {
-        const route = result.routes[0].legs
-        route.map(
-          leg =>
-            calculateDistanceAndDurationAlt(
-              Math.round(leg.distance.value / 1000),
-              Math.round(leg.duration.value / 60)
-            )
-        )
-      }
+      const putFetchingResultToState = (fetcher, result) =>
+        fetcher === 'firstFetcher' ?
+          this.setState({
+            fetchingResult: result
+          }) :
+          fetcher === 'altFetcher' ?
+            this.setState({
+              fetchingResultAlt: result
+            }) :
+            undefined
 
       const displayDirections = (result, resultAlt) =>
         this.state.displayDirections(result, resultAlt)
-
-      const putFetchingResultToState = result =>
-        this.setState({
-          fetchingResult: result
-        })
-
-      const putFetchingResultAltToState = resultAlt =>
-        this.setState({
-          fetchingResultAlt: resultAlt
-        })
 
       GoogleMapsLoader.load(function (google) {
         const request = {
@@ -195,7 +180,6 @@ export class FormProvider extends Component {
           destination: startingPoint,
           waypoints: directionsWaypoints(),
           optimizeWaypoints: true,
-          // provideRouteAlternatives: true,
           avoidHighways: false,
           travelMode: 'DRIVING'
         }
@@ -208,16 +192,16 @@ export class FormProvider extends Component {
 
         directionsService.route(request, function (result, status) {
           if (status === 'OK') {
-            directionsResult(result)
-            console.log('Directions:', result, totalDistance, totalDistanceAlt, totalDuration, totalDurationAlt)
-            putFetchingResultToState(result)
+            const fetcher = 'firstFetcher'
+            getDistanceAndDurationValues(fetcher, result)
+            putFetchingResultToState(fetcher, result)
 
             directionsService.route(requestAlt, function (resultAlt, status) {
               if (status === 'OK') {
+                const fetcher = 'altFetcher'
                 fetchingIsFinished()
-                directionsResultAlt(resultAlt)
-                console.log('DirectionsAlt:', resultAlt)
-                putFetchingResultAltToState(resultAlt)
+                getDistanceAndDurationValues(fetcher, resultAlt)
+                putFetchingResultToState(fetcher, resultAlt)
                 displayDirections(result, resultAlt)
               }
             })
