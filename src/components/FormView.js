@@ -8,26 +8,24 @@ class FormView extends Component {
   render() {
     return (
       <div className="form__container">
-        <div>
-          <label htmlFor="form__input-startingPoint">Starting point</label>
+        <div className="form__container--input-text">
+          <label className="form__input-label" htmlFor="form__input-startingPoint">Starting point</label>
           <input
             id="form__input-startingPoint"
+            className="form__input-text"
             type="text"
             name="startingPoint"
-            aria-label="Starting point"
-            placeholder="Starting point"
             value={this.props.startingPoint}
             onChange={this.props.handleChange}
           />
         </div>
-        <div>
-          <label htmlFor="form__input-destination">Destination</label>
+        <div className="form__container--input-text">
+          <label className="form__input-label" htmlFor="form__input-destination">Destination</label>
           <input
             id="form__input-destination"
+            className="form__input-text"
             type="text"
             name="destination"
-            aria-label="Destination"
-            placeholder="Destination"
             value={this.props.destination}
             onChange={this.props.handleChange}
           />
