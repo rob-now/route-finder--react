@@ -91,6 +91,7 @@ class RouteSummary extends Component {
     console.log('fetchedResultLegs', fetchedResultLegs, 'fetchedResultAltLegs', fetchedResultAltLegs)
     return (
       <Fragment>
+        {this.props.fetching && <h2 className="route-summary__loading">Loading content...</h2>}
         {
           this.props.totalDistance &&
           this.props.totalDuration &&
