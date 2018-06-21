@@ -1,0 +1,12 @@
+.form-errors__container {
+    margin: 0;
+    width: 600px;
+    text-align: center;
+    font-weight: bold;
+    border-radius: 2px;
+    background: rgba(255, 0, 18, 0.32);
+}
+
+.form-errors__paragraph {
+    margin: 10px 0;
+}
