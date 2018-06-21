@@ -3,6 +3,13 @@ import {withForm} from '../contexts/Form'
 import './RouteSummary.css'
 
 class RouteSummary extends Component {
+
+  componentDidMount() {
+    if (this.props.optimization === '') {
+      this.props.history.push(`/`)
+    }
+  }
+
   render() {
     return (
       <div>
@@ -19,8 +26,10 @@ class RouteSummary extends Component {
               {
                 (this.props.optimization === 'shortest' && this.props.totalDistance <= this.props.totalDistanceAlt) ||
                 (this.props.optimization === 'fastest' && this.props.totalDuration <= this.props.totalDurationAlt) ?
-                  <p>Total distance: {this.props.totalDistance} kilometers. Total duration: {this.props.totalDuration} minutes.</p> :
-                  <p>Total distance: {this.props.totalDistanceAlt} kilometers. Total duration: {this.props.totalDurationAlt} minutes.</p>
+                  <p>Total distance: {this.props.totalDistance} kilometers. Total
+                    duration: {this.props.totalDuration} minutes.</p> :
+                  <p>Total distance: {this.props.totalDistanceAlt} kilometers. Total
+                    duration: {this.props.totalDurationAlt} minutes.</p>
               }
             </div>
           </div>

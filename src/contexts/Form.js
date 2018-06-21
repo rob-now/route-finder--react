@@ -84,9 +84,7 @@ export class FormProvider extends Component {
       })
     },
 
-    handleSubmit: event => {
-      event.preventDefault()
-
+    handleSubmit: () => {
       const {startingPoint, destinations, optimization} = this.state
 
       this.setState({
@@ -199,15 +197,11 @@ export class FormProvider extends Component {
                 fetchingIsFinished()
                 getDistanceAndDurationValues(fetcher, resultAlt)
                 putFetchingResultToState(fetcher, resultAlt)
-                displayDirections(result, resultAlt)
+                // displayDirections(result, resultAlt)
               }
             })
           }
         })
-      })
-
-      this.setState({
-        startingPoint: ''
       })
     }
   }

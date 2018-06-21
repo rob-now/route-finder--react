@@ -3,7 +3,6 @@ import {withForm} from '../contexts/Form'
 import './FormView.css'
 import FormErrorsView from './FormErrorsView'
 import DestinationsList from './DestinationsList'
-import RouteSummary from './RouteSummary'
 
 class FormView extends Component {
   render() {
@@ -42,8 +41,8 @@ class FormView extends Component {
         >
           Add destination
         </button>
-        <p className="form__input-description">*You can add destination to the list of destinations and then Submit.</p>
-          <div className="form__container--input-radio">
+        <p className="form__input-description">*You can add destination to the list of destinations.</p>
+        <div className="form__container--input-radio">
           <p className="form__input-radio-title">Choose route optimization:</p>
           <div className="form__container--input-radio-buttons">
             <input
@@ -70,13 +69,15 @@ class FormView extends Component {
         </div>
         <button
           className="form__btn btn-submit"
-          onClick={this.props.handleSubmit}
+          onClick={() => {
+            this.props.handleSubmit()
+            this.props.history.push(`/best-route`)
+          }}
         >
-          Submit
+          Show best route
         </button>
         <FormErrorsView/>
         <DestinationsList/>
-        <RouteSummary/>
       </div>
     )
   }

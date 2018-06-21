@@ -1,16 +1,16 @@
 import React, {Component, Fragment} from 'react'
-import FormView from './components/FormView'
-import DirectionsView from './components/DirectionsView'
 import {withForm} from './contexts/Form'
+import {BrowserRouter as Router} from 'react-router-dom'
+import Routes from './routes/Routes'
 
 class App extends Component {
 
   render() {
     return (
       <Fragment>
-        <FormView/>
-
-        <DirectionsView/>
+        <Router>
+          <Routes/>
+        </Router>
       </Fragment>
     );
   }
