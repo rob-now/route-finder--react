@@ -11,36 +11,28 @@ body {
     align-content: center;
 }
 
-.form__container--input-text {
+.form__container--input-text,
+.form__container--input-radio {
     width: 600px;
-    /*display: flex;*/
-    /*justify-content: center;*/
-    /*align-items: center;*/
-    /*align-content: center;*/
 }
 
-.form__input-label {
+.form__input-text-label,
+.form__input-radio-title {
     display: block;
-    /* width: 30%; */
     text-align: center;
-    /* padding-right: 20px; */
+    font-weight: bold;
 }
 
 .form__input-text {
     box-sizing: border-box;
     font-family: "Lato", sans-serif;
-    /* background: rgba(255,255,255,0.1); */
     border: none;
     border-radius: 2px;
     font-size: 18px;
-    /* height: auto; */
-    /* margin: 0; */
-    /* outline: 0; */
     padding: 15px;
     width: 100%;
     background-color: #ebf5f5;
     color: #424242;
-    -webkit-box-shadow: 0 0 5px rgba(73, 78, 92, 0.45);
     box-shadow: 0 0 5px rgba(73, 78, 92, 0.45);
     margin: 20px auto 5px;
 }
@@ -50,8 +42,17 @@ body {
     font-size: 12px;
 }
 
+.form__container--input-radio-buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.form__radio-input {
+    cursor: pointer;
+}
+
 .form__btn {
-    /*display: block;*/
     font-size: 16px;
     font-weight: bold;
     width: 600px;
@@ -85,5 +86,5 @@ body {
 }
 
 .btn-submit:hover {
-    background: #00c079;
+    background: #00c47d;
 }

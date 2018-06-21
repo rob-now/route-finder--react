@@ -9,7 +9,7 @@ class FormView extends Component {
     return (
       <div className="form__container">
         <div className="form__container--input-text">
-          <label className="form__input-label" htmlFor="form__input-startingPoint">Starting point</label>
+          <label className="form__input-text-label" htmlFor="form__input-startingPoint">Starting point</label>
           <input
             id="form__input-startingPoint"
             className="form__input-text"
@@ -18,19 +18,21 @@ class FormView extends Component {
             value={this.props.startingPoint}
             onChange={this.props.handleChange}
           />
-          <p className="form__input-description">*Name: "Gdańsk, aleja Grunwaldzka 141" or latitude and longitude value: "54.3812021,18.5979846".</p>
+          <p className="form__input-description">*Name: "Gdańsk, aleja Grunwaldzka 141" or latitude and longitude value:
+            "54.3812021,18.5979846".</p>
         </div>
         <div className="form__container--input-text">
-          <label className="form__input-label" htmlFor="form__input-destination">Destination</label>
+          <label className="form__input-text-label" htmlFor="form__input-destination">Destination</label>
           <input
-            id="form__input-destination"
+            id="form__input-text-destination"
             className="form__input-text"
             type="text"
             name="destination"
             value={this.props.destination}
             onChange={this.props.handleChange}
           />
-          <p className="form__input-description">*Name: "Gdańsk, aleja Grunwaldzka 141" or latitude and longitude value: "54.3812021,18.5979846".</p>
+          <p className="form__input-description">*Name: "Gdańsk, aleja Grunwaldzka 141" or latitude and longitude value:
+            "54.3812021,18.5979846".</p>
 
         </div>
         <button
@@ -39,25 +41,30 @@ class FormView extends Component {
         >
           Add destination
         </button>
-        <div>
-          <input
-            id="form__radio-fastest"
-            type="radio"
-            name="optimization"
-            checked={this.props.optimization === 'fastest'}
-            value='fastest'
-            onChange={this.props.handleChange}
-          />
-          <label htmlFor="form__radio-fastest">Fastest</label>
-          <input
-            id="form__radio-shortest"
-            type="radio"
-            name="optimization"
-            checked={this.props.optimization === 'shortest'}
-            value="shortest"
-            onChange={this.props.handleChange}
-          />
-          <label htmlFor="form__radio-shortest">Shortest</label>
+        <div className="form__container--input-radio">
+          <p className="form__input-radio-title">Choose route optimization:</p>
+          <div className="form__container--input-radio-buttons">
+            <input
+              id="form__radio-fastest"
+              className="form__radio-input"
+              type="radio"
+              name="optimization"
+              checked={this.props.optimization === 'fastest'}
+              value='fastest'
+              onChange={this.props.handleChange}
+            />
+            <label className="form__radio-input" htmlFor="form__radio-fastest">Fastest</label>
+            <input
+              id="form__radio-shortest"
+              className="form__radio-input"
+              type="radio"
+              name="optimization"
+              checked={this.props.optimization === 'shortest'}
+              value="shortest"
+              onChange={this.props.handleChange}
+            />
+            <label className="form__radio-input" htmlFor="form__radio-shortest">Shortest</label>
+          </div>
         </div>
         <button
           className="form__btn btn-submit"
