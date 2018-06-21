@@ -30,8 +30,9 @@ class RouteSummary extends Component {
                 (this.props.optimization === 'shortest' && this.props.totalDistance <= this.props.totalDistanceAlt) ||
                 (this.props.optimization === 'fastest' && this.props.totalDuration <= this.props.totalDurationAlt) ?
                   <div>
-                  <p>Total distance: {this.props.totalDistance} kilometers. Total
-                    duration: {this.props.totalDuration} minutes.</p>
+                    <p>Total distance: <strong>{this.props.totalDistance} km</strong>.</p>
+                    <p>Total duration: <strong>{this.props.totalDuration} min</strong>.</p>
+
                     <div className="route-summary__table">
                       <div className="route-summary__table-row route-summary__table-heading">
                         <div className="route-summary__table-cell route-summary__table-cell-first">
@@ -46,7 +47,7 @@ class RouteSummary extends Component {
                       </div>
                       <div className="route-summary__table-row">
                         <div className="route-summary__table-cell route-summary__table-cell-first">
-                          Bukowa 2
+                          {fetchedResultLegs[0].start_address}
                         </div>
                         <div className="route-summary__table-cell">
 
@@ -55,22 +56,30 @@ class RouteSummary extends Component {
 
                         </div>
                       </div>
-                      <div className="route-summary__table-row">
-                        <div className="route-summary__table-cell route-summary__table-cell-first">
-                          Leśna 15
-                        </div>
-                        <div className="route-summary__table-cell">
-                          17km
-                        </div>
-                        <div className="route-summary__table-cell">
-                          25min
-                        </div>
-                      </div>
+                      {
+                        fetchedResultLegs.map(
+                          leg =>
+
+                            <div className="route-summary__table-row">
+                              <div className="route-summary__table-cell route-summary__table-cell-first">
+                                {leg.end_address}
+                              </div>
+                              <div className="route-summary__table-cell">
+                                {leg.distance.text}
+                              </div>
+                              <div className="route-summary__table-cell">
+                                {leg.duration.text}
+                              </div>
+                            </div>
+                        )
+                      }
                     </div>
                   </div>
                   :
-                  <p>Total distance: {this.props.totalDistanceAlt} kilometers. Total
-                    duration: {this.props.totalDurationAlt} minutes.</p>
+                  <Fragment>
+                    <p>Total distance: <strong>{this.props.totalDistanceAlt} km</strong>.</p>
+                    <p>Total duration: <strong>{this.props.totalDurationAlt} min</strong>.</p>
+                  </Fragment>
               }
             </div>
           </div>
