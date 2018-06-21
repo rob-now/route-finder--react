@@ -31,14 +31,10 @@ h3 {
 }
 
 .route-summary__table-row {
-    border: 1px solid black;
+    border-bottom: 1px solid rgba(136, 136, 255, 0.31);
     display: flex;
     flex-wrap: nowrap;
     justify-content: space-between;
-}
-
-.route-summary__table-row-100 {
-    border: 1px solid black;
 }
 
 .route-summary__table-heading {
