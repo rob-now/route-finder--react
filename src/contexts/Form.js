@@ -114,7 +114,7 @@ export class FormProvider extends Component {
 
       if (optimization.trim() === '') {
         this.setState({
-          formError: new Error('You have to choose route optimization (fastest or shortest).')
+          formError: new Error('You have to choose route optimization (fast or short).')
         })
         return
       }

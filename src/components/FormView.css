@@ -23,6 +23,10 @@ body {
     font-weight: bold;
 }
 
+.form__input-radio-title {
+    margin: 0 0 10px 0;
+}
+
 .form__input-text {
     box-sizing: border-box;
     font-family: "Lato", sans-serif;
@@ -34,7 +38,7 @@ body {
     background-color: #ebf5f5;
     color: #424242;
     box-shadow: 0 0 5px rgba(73, 78, 92, 0.45);
-    margin: 20px auto 5px;
+    margin: 10px auto 5px;
 }
 
 .form__input-description {
@@ -57,7 +61,7 @@ body {
     font-weight: bold;
     width: 600px;
     padding: 10px;
-    margin: 20px auto;
+    margin: 10px auto;
     text-transform: uppercase;
     text-align: center;
     color: #fff;

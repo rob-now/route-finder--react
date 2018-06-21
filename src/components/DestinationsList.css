@@ -1,0 +1,30 @@
+.destinations-list__container {
+    margin: 0;
+    width: 600px;
+}
+
+.destinations-list__title{
+    margin: 0;
+    text-align: center;
+    font-weight: bold;
+}
+
+.destinations-list__list {
+    list-style: none;
+    padding: 0;
+    margin: 10px 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    font-size: 16px;
+}
+
+.destinations-list__list-item-container {
+    display: flex;
+    align-items: center;
+    margin: 5px;
+}
+
+.destinations-list__list-item {
+    color: #5a54b4;
+}

@@ -53,7 +53,7 @@ class FormView extends Component {
               value='fastest'
               onChange={this.props.handleChange}
             />
-            <label className="form__radio-input" htmlFor="form__radio-fastest">Fastest</label>
+            <label className="form__radio-input" htmlFor="form__radio-fastest">Fast</label>
             <input
               id="form__radio-shortest"
               className="form__radio-input"
@@ -63,7 +63,7 @@ class FormView extends Component {
               value="shortest"
               onChange={this.props.handleChange}
             />
-            <label className="form__radio-input" htmlFor="form__radio-shortest">Shortest</label>
+            <label className="form__radio-input" htmlFor="form__radio-shortest">Short</label>
           </div>
         </div>
         <button

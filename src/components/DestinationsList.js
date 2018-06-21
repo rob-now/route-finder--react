@@ -1,16 +1,18 @@
 import React, {Component} from 'react'
 import {withForm} from '../contexts/Form'
+import './DestinationsList.css'
 
 class DestinationsList extends Component {
   render() {
     return (
-      <div>
-        <ul>
+      <div className="destinations-list__container">
+        <p className="destinations-list__title">List of destinations:</p>
+        <ul className="destinations-list__list">
           {
             this.props.destinations.map(
               ({id, location}) =>
-                <div key={id}>
-                  <li>{location}</li>
+                <div key={id} className="destinations-list__list-item-container">
+                  <li className="destinations-list__list-item">{location}</li>
                   <button
                     onClick={() => this.props.removeDestination(id)}
                   >
