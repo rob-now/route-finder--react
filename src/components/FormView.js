@@ -3,6 +3,7 @@ import {withForm} from '../contexts/Form'
 import './FormView.css'
 import FormErrorsView from './FormErrorsView'
 import DestinationsList from './DestinationsList'
+import RouteSummary from './RouteSummary'
 
 class FormView extends Component {
   render() {
@@ -75,6 +76,7 @@ class FormView extends Component {
         </button>
         <FormErrorsView/>
         <DestinationsList/>
+        {/*<RouteSummary/>*/}
       </div>
     )
   }
