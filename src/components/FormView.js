@@ -76,7 +76,7 @@ class FormView extends Component {
         </button>
         <FormErrorsView/>
         <DestinationsList/>
-        {/*<RouteSummary/>*/}
+        <RouteSummary/>
       </div>
     )
   }

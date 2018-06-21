@@ -14,9 +14,14 @@ class RouteSummary extends Component {
             <p className="route-summary__title">
               Route summary:
             </p>
-            <p className="route-summary__item">
-              {/*{this.props.optimization === ''}Total distance: {this.props.}*/}
-            </p>
+            <div className="route-summary__item">
+              {
+                (this.props.optimization === 'shortest' && this.props.totalDistance <= this.props.totalDistanceAlt) ||
+                (this.props.optimization === 'fastest' && this.props.totalDuration <= this.props.totalDurationAlt) ?
+                  <p>Total distance: {this.props.totalDistance} kilometers. Total duration: {this.props.totalDuration} minutes.</p> :
+                  <p>Total distance: {this.props.totalDistanceAlt} kilometers. Total duration: {this.props.totalDurationAlt} minutes.</p>
+              }
+            </div>
           </div>
         }
       </div>
