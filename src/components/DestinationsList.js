@@ -7,7 +7,7 @@ class DestinationsList extends Component {
   render() {
     return (
       <div className="destinations-list__container">
-        <p className="destinations-list__title">List of destinations:</p>
+        {this.props.destinations.length > 0 && <p className="destinations-list__title">List of destinations:</p>}
         <ul className="destinations-list__list">
           {
             this.props.destinations.map(
