@@ -13,7 +13,13 @@ export class FormProvider extends Component {
   state = {
     startingPoint: '',
     destination: '',
-    destinations: [],
+    destinations: [
+      {
+        id: 0,
+        location: 'Gdansk, Grunwaldzka 141',
+        stopover: true
+      }
+    ],
     totalDistance: null,
     totalDuration: null,
     totalDistanceAlt: null,
@@ -81,7 +87,7 @@ export class FormProvider extends Component {
     handleSubmit: event => {
       event.preventDefault()
 
-      const {startingPoint, destinations, optimization, totalDistance, totalDistanceAlt, totalDuration, totalDurationAlt} = this.state
+      const {startingPoint, destinations, optimization} = this.state
 
       if (startingPoint.trim() === '') {
         this.setState({
@@ -116,13 +122,13 @@ export class FormProvider extends Component {
       const calculateDistanceAndDuration = (fetcher, distance, duration) =>
         fetcher === 'firstFetcher' ?
           this.setState({
-            totalDistance: totalDistance + distance,
-            totalDuration: totalDuration + duration
+            totalDistance: this.state.totalDistance + distance,
+            totalDuration: this.state.totalDuration + duration
           }) :
           fetcher === 'altFetcher' ?
             this.setState({
-              totalDistanceAlt: totalDistanceAlt + distance,
-              totalDurationAlt: totalDurationAlt + duration
+              totalDistanceAlt: this.state.totalDistanceAlt + distance,
+              totalDurationAlt: this.state.totalDurationAlt + duration
             }) :
             undefined
 
