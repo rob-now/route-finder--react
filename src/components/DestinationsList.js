@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {withForm} from '../contexts/Form'
 import './DestinationsList.css'
+import 'font-awesome/css/font-awesome.min.css'
 
 class DestinationsList extends Component {
   render() {
@@ -12,12 +13,11 @@ class DestinationsList extends Component {
             this.props.destinations.map(
               ({id, location}) =>
                 <div key={id} className="destinations-list__list-item-container">
-                  <li className="destinations-list__list-item">{location}</li>
-                  <button
+                  <li className="destinations-list__list-item">{location} &nbsp;</li>
+                  <i
+                    className="fas fa-times fa-sm"
                     onClick={() => this.props.removeDestination(id)}
-                  >
-                    Remove
-                  </button>
+                  />
                 </div>
             )
           }

@@ -27,4 +27,11 @@
 
 .destinations-list__list-item {
     color: #5a54b4;
+    margin-left: 5px;
+}
+
+.fa-times {
+    cursor: pointer;
+    color: #D10326;
+    transition: 0.3s all linear;
 }
