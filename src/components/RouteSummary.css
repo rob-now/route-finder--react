@@ -34,20 +34,21 @@
     font-size: 18px;
     background: #6765cd;
     color: #fff;
+    padding: 10px 0;
 }
 
 .route-summary__table-cell,
 .route-summary__table-cell-instr {
     width: 25%;
     text-align: right;
-    padding: 5px;
+    padding: 5px 10px;
 }
 
 .route-summary__table-cell-first,
 .route-summary__table-cell-first-instr {
     text-align: left;
     width: 50%;
-    padding: 5px;
+    padding: 5px 10px;
 }
 
 .route-summary__table-cell-first-instr,

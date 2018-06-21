@@ -67,23 +67,6 @@ export class FormProvider extends Component {
         })
       ),
 
-    displayDirections: (result, resultAlt) => {
-      const {optimization, totalDistance, totalDistanceAlt, totalDuration, totalDurationAlt} = this.state
-
-      GoogleMapsLoader.load(function (google) {
-        const directionsDisplay = new google.maps.DirectionsRenderer()
-        const directionsPanel = document.getElementById('directionsPanel')
-        // directionsPanel.innerText = ''
-        directionsDisplay.setPanel(directionsPanel)
-        if ((optimization === 'shortest' && totalDistance <= totalDistanceAlt) ||
-          (optimization === 'fastest' && totalDuration <= totalDurationAlt)) {
-          directionsDisplay.setDirections(result)
-        } else {
-          directionsDisplay.setDirections(resultAlt)
-        }
-      })
-    },
-
     handleSubmit: () => {
       const {startingPoint, destinations, optimization} = this.state
 
@@ -166,9 +149,6 @@ export class FormProvider extends Component {
             }) :
             undefined
 
-      const displayDirections = (result, resultAlt) =>
-        this.state.displayDirections(result, resultAlt)
-
       GoogleMapsLoader.load(function (google) {
         const request = {
           origin: startingPoint,
@@ -197,7 +177,6 @@ export class FormProvider extends Component {
                 fetchingIsFinished()
                 getDistanceAndDurationValues(fetcher, resultAlt)
                 putFetchingResultToState(fetcher, resultAlt)
-                displayDirections(result, resultAlt)
               }
             })
           }
