@@ -41,7 +41,8 @@ class FormView extends Component {
         >
           Add destination
         </button>
-        <div className="form__container--input-radio">
+        <p className="form__input-description">*You can add destination to the list of destinations and then Submit.</p>
+          <div className="form__container--input-radio">
           <p className="form__input-radio-title">Choose route optimization:</p>
           <div className="form__container--input-radio-buttons">
             <input
