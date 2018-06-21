@@ -44,13 +44,13 @@ class RouteSummary extends Component {
         </div>
         {
           legs && legs.map(
-            leg =>
-              <Fragment>
+            (leg, index) =>
+              <Fragment key={index}>
                 <div className="route-summary__table-row-100">
                   {
                     leg.steps.map(
-                      step =>
-                        <Fragment>
+                      (step, index) =>
+                        <Fragment key={index}>
                           <div className="route-summary__table-row">
                             <div
                               className="route-summary__table-cell-first-instr"
@@ -88,7 +88,6 @@ class RouteSummary extends Component {
   render() {
     const fetchedResultLegs = this.props.fetchedResult && this.props.fetchedResult.routes[0].legs
     const fetchedResultAltLegs = this.props.fetchedResultAlt && this.props.fetchedResultAlt.routes[0].legs
-    console.log('fetchedResultLegs', fetchedResultLegs, 'fetchedResultAltLegs', fetchedResultAltLegs)
     return (
       <Fragment>
         {this.props.fetching && <h2 className="route-summary__loading">Loading content...</h2>}
