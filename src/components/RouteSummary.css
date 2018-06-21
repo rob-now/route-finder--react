@@ -1,0 +1,15 @@
+.route-summary__container{
+    margin: 0;
+    width: 600px;
+}
+
+.route-summary__title {
+    margin: 20px 0 0;
+    text-align: center;
+    font-weight: bold;
+}
+
+.route-summary__item {
+    margin: 0;
+    text-align: center;
+}
