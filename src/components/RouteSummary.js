@@ -18,10 +18,10 @@ class RouteSummary extends Component {
   makeSummaryTable = (legs, fetcher) =>
     <div>
       <p>Total
-        distance: <strong>{fetcher === 'firstFetcher' ? this.props.totalDistance : fetcher === 'secondFetcher' ? this.props.totalDistanceAlt : undefined} km</strong>.
+        distance: <strong>{fetcher === 'firstFetcher' ? this.props.totalDistance : fetcher === 'secondFetcher' ? this.props.totalDistanceAlt : undefined} km</strong>
       </p>
       <p>Total
-        duration: <strong>{fetcher === 'firstFetcher' ? calculateTime(this.props.totalDuration) : fetcher === 'secondFetcher' ? calculateTime(this.props.totalDurationAlt) : undefined}</strong>.
+        duration: <strong>{fetcher === 'firstFetcher' ? calculateTime(this.props.totalDuration) : fetcher === 'secondFetcher' ? calculateTime(this.props.totalDurationAlt) : undefined}</strong>
       </p>
 
       <div className="route-summary__table">
