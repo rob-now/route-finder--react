@@ -1,6 +1,7 @@
 import React, {Component, Fragment} from 'react'
 import {withForm} from '../contexts/Form'
 import './RouteSummary.css'
+import 'font-awesome/css/font-awesome.min.css'
 
 class RouteSummary extends Component {
 
@@ -9,6 +10,9 @@ class RouteSummary extends Component {
       this.props.history.push(`/`)
     }
   }
+
+  handleGoBack = () =>
+    this.props.history.push('/')
 
   makeSummaryTable = (legs, fetcher) =>
     <div>
@@ -97,9 +101,16 @@ class RouteSummary extends Component {
           this.props.totalDistanceAlt &&
           this.props.totalDurationAlt &&
           <div className="route-summary__container">
-            <p className="route-summary__title">
+            <h3>
+              <i
+                className="fas fa-arrow-circle-left"
+                onClick={this.handleGoBack}
+              >&nbsp;
+              </i>
+              <span className="route-summary__title">
               Route summary:
-            </p>
+            </span>
+            </h3>
             <div className="route-summary__item">
               {
                 (this.props.optimization === 'shortest' && this.props.totalDistance <= this.props.totalDistanceAlt) ||
