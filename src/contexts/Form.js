@@ -67,6 +67,11 @@ export class FormProvider extends Component {
         })
       ),
 
+    passFormErrorToContext: formError =>
+      this.setState({
+        formError
+      }),
+
     handleSubmit: () => {
       const {startingPoint, destinations, optimization} = this.state
 
@@ -90,6 +95,8 @@ export class FormProvider extends Component {
         })
         return
       }
+
+
 
       this.setState({
         fetching: true,

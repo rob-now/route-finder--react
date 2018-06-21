@@ -5,6 +5,17 @@ import FormErrorsView from './FormErrorsView'
 import DestinationsList from './DestinationsList'
 
 class FormView extends Component {
+
+  handleClick = () => {
+    if (this.props.startingPoint.trim() === '') {
+      this.props.passFormErrorToContext(new Error('Starting point cannot be empty.'))
+      return
+    }
+
+    this.props.handleSubmit()
+    this.props.history.push(`/best-route`)
+  }
+
   render() {
     return (
       <div className="form__container">
@@ -69,10 +80,7 @@ class FormView extends Component {
         </div>
         <button
           className="form__btn btn-submit"
-          onClick={() => {
-            this.props.handleSubmit()
-            this.props.history.push(`/best-route`)
-          }}
+          onClick={this.handleClick}
         >
           Show best route
         </button>
