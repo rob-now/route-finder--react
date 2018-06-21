@@ -13,13 +13,7 @@ export class FormProvider extends Component {
   state = {
     startingPoint: '',
     destination: '',
-    destinations: [
-      {
-        id: 0,
-        location: 'Gdansk, Grunwaldzka 141',
-        stopover: true
-      }
-    ],
+    destinations: [],
     totalDistance: null,
     totalDuration: null,
     totalDistanceAlt: null,
