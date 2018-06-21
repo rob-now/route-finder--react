@@ -73,7 +73,7 @@ export class FormProvider extends Component {
       GoogleMapsLoader.load(function (google) {
         const directionsDisplay = new google.maps.DirectionsRenderer()
         const directionsPanel = document.getElementById('directionsPanel')
-        directionsPanel.innerText = ''
+        // directionsPanel.innerText = ''
         directionsDisplay.setPanel(directionsPanel)
         if ((optimization === 'shortest' && totalDistance <= totalDistanceAlt) ||
           (optimization === 'fastest' && totalDuration <= totalDurationAlt)) {
@@ -197,7 +197,7 @@ export class FormProvider extends Component {
                 fetchingIsFinished()
                 getDistanceAndDurationValues(fetcher, resultAlt)
                 putFetchingResultToState(fetcher, resultAlt)
-                // displayDirections(result, resultAlt)
+                displayDirections(result, resultAlt)
               }
             })
           }
