@@ -18,6 +18,7 @@ class FormView extends Component {
             value={this.props.startingPoint}
             onChange={this.props.handleChange}
           />
+          <p className="form__input-description">*Name: "Gdańsk, aleja Grunwaldzka 141" or latitude and longitude value: "54.3812021,18.5979846".</p>
         </div>
         <div className="form__container--input-text">
           <label className="form__input-label" htmlFor="form__input-destination">Destination</label>
@@ -29,9 +30,11 @@ class FormView extends Component {
             value={this.props.destination}
             onChange={this.props.handleChange}
           />
+          <p className="form__input-description">*Name: "Gdańsk, aleja Grunwaldzka 141" or latitude and longitude value: "54.3812021,18.5979846".</p>
+
         </div>
         <button
-          className="form__btn add-destination"
+          className="form__btn btn-add-destination"
           onClick={this.props.addDestination}
         >
           Add destination
@@ -57,7 +60,7 @@ class FormView extends Component {
           <label htmlFor="form__radio-shortest">Shortest</label>
         </div>
         <button
-          className="form__btn submit"
+          className="form__btn btn-submit"
           onClick={this.props.handleSubmit}
         >
           Submit

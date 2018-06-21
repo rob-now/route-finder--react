@@ -13,52 +13,77 @@ body {
 
 .form__container--input-text {
     width: 600px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    /*display: flex;*/
+    /*justify-content: center;*/
+    /*align-items: center;*/
     /*align-content: center;*/
 }
 
 .form__input-label {
-    /*display: inline-block;*/
-    width: 30%;
-    text-align: right;
-    /*padding-right: 20px;*/
+    display: block;
+    /* width: 30%; */
+    text-align: center;
+    /* padding-right: 20px; */
 }
 
 .form__input-text {
+    box-sizing: border-box;
     font-family: "Lato", sans-serif;
-    /*background: rgba(255,255,255,0.1);*/
+    /* background: rgba(255,255,255,0.1); */
     border: none;
+    border-radius: 2px;
     font-size: 18px;
-    /*height: auto;*/
-    /*margin: 0;*/
-    /*outline: 0;*/
+    /* height: auto; */
+    /* margin: 0; */
+    /* outline: 0; */
     padding: 15px;
-    width: 70%;
+    width: 100%;
     background-color: #ebf5f5;
     color: #424242;
+    -webkit-box-shadow: 0 0 5px rgba(73, 78, 92, 0.45);
     box-shadow: 0 0 5px rgba(73, 78, 92, 0.45);
-    margin: 20px;
+    margin: 20px auto 5px;
+}
+
+.form__input-description {
+    margin: 0 0 20px;
+    font-size: 12px;
 }
 
 .form__btn {
     /*display: block;*/
-    font-size: 20px;
-    width: 300px;
+    font-size: 16px;
+    font-weight: bold;
+    width: 600px;
     padding: 10px;
     margin: 20px auto;
     text-transform: uppercase;
     text-align: center;
-    background: #EE4B28;
     color: #fff;
     border: none;
-    transition: all 0.4s;
+    border-radius: 2px;
+    transition: all 0.3s;
     outline: none;
     cursor: pointer;
 }
 
-.form__btn:hover {
-    transition: all 0.4s;
-    background: #c94727;
+.btn-add-destination {
+    background: #7b64ee;
+}
+
+.btn-submit {
+    background: #00cd82;
+}
+
+.btn-add-destination:hover,
+.btn-submit:hover {
+    transition: all 0.3s;
+}
+
+.btn-add-destination:hover {
+    background: #6765cd;
+}
+
+.btn-submit:hover {
+    background: #00c079;
 }
