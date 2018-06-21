@@ -89,6 +89,13 @@ export class FormProvider extends Component {
 
       const {startingPoint, destinations, optimization} = this.state
 
+      this.setState({
+        totalDistance: null,
+        totalDuration: null,
+        totalDistanceAlt: null,
+        totalDurationAlt: null
+      })
+
       if (startingPoint.trim() === '') {
         this.setState({
           formError: new Error('Starting point cannot be empty.')
