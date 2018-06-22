@@ -27,7 +27,7 @@ class RouteSummary extends Component {
       <div className="route-summary__table">
         <div className="route-summary__table-row route-summary__table-heading">
           <div className="route-summary__table-cell route-summary__table-cell-first">
-            Waypoints
+            Directions
           </div>
           <div className="route-summary__table-cell">
             Distance

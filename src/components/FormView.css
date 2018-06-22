@@ -62,7 +62,7 @@ body {
     font-weight: bold;
     width: 600px;
     padding: 10px;
-    margin: 10px 0 5px 0;
+    margin: 0 0 5px 0;
     text-transform: uppercase;
     text-align: center;
     color: #fff;
@@ -75,10 +75,12 @@ body {
 
 .btn-add-destination {
     background: #7b64ee;
+
 }
 
 .btn-submit {
     background: #00cd82;
+    margin: 0 0 20px 0;
 }
 
 .btn-add-destination:hover,

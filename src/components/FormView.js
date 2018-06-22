@@ -6,9 +6,16 @@ import DestinationsList from './DestinationsList'
 
 class FormView extends Component {
 
-  handleClick = () => {
+  handleClick = event => {
+    event.preventDefault()
+
     if (this.props.startingPoint.trim() === '') {
-      this.props.passFormErrorToContext(new Error('Starting point cannot be empty.'))
+      this.props.passFormErrorToContext(new Error('Starting point cannot be empty'))
+      return
+    }
+
+    if (this.props.destinations.length === 0) {
+      this.props.passFormErrorToContext(new Error('There are no destinations'))
       return
     }
 
@@ -19,40 +26,55 @@ class FormView extends Component {
   render() {
     return (
       <div className="form__container">
-        <div className="form__container--input-text">
-          <label className="form__input-text-label" htmlFor="form__input-startingPoint">Starting point</label>
-          <input
-            id="form__input-startingPoint"
-            className="form__input-text"
-            type="text"
-            name="startingPoint"
-            value={this.props.startingPoint}
-            onChange={this.props.handleChange}
-          />
-          <p className="form__input-description">*Name: "Gdańsk, aleja Grunwaldzka 141" or latitude and longitude value:
-            "54.3812021,18.5979846".</p>
-        </div>
-        <div className="form__container--input-text">
-          <label className="form__input-text-label" htmlFor="form__input-destination">Destination</label>
-          <input
-            id="form__input-text-destination"
-            className="form__input-text"
-            type="text"
-            name="destination"
-            value={this.props.destination}
-            onChange={this.props.handleChange}
-          />
-          <p className="form__input-description">*Name: "Gdańsk, aleja Grunwaldzka 141" or latitude and longitude value:
-            "54.3812021,18.5979846".</p>
 
-        </div>
-        <button
-          className="form__btn btn-add-destination"
-          onClick={this.props.addDestination}
-        >
-          Add destination
-        </button>
-        <p className="form__input-description">*You can add destination to the list of destinations.</p>
+        <form onSubmit={this.handleClick}>
+          <div className="form__container--input-text">
+            <label className="form__input-text-label" htmlFor="form__input-startingPoint">Starting point</label>
+            <input
+              id="form__input-startingPoint"
+              className="form__input-text"
+              type="text"
+              name="startingPoint"
+              value={this.props.startingPoint}
+              onChange={this.props.handleChange}
+            />
+            <p className="form__input-description">*Name: "Gdańsk, aleja Grunwaldzka 141" or latitude and longitude
+              value:
+              "54.3812021,18.5979846"</p>
+          </div>
+          <button
+            className="form__btn btn-submit"
+            onClick={this.handleClick}
+          >
+            Show best route
+          </button>
+        </form>
+
+        <form onSubmit={this.props.addDestination}>
+          <div className="form__container--input-text">
+            <label className="form__input-text-label" htmlFor="form__input-destination">Destination</label>
+            <input
+              id="form__input-text-destination"
+              className="form__input-text"
+              type="text"
+              name="destination"
+              value={this.props.destination}
+              onChange={this.props.handleChange}
+            />
+            <p className="form__input-description">*Name: "Gdańsk, aleja Grunwaldzka 141" or latitude and longitude
+              value:
+              "54.3812021,18.5979846"</p>
+
+          </div>
+          <button
+            className="form__btn btn-add-destination"
+            onClick={this.props.addDestination}
+          >
+            Add destination
+          </button>
+          <p className="form__input-description">*You can add destination to the list of destinations</p>
+        </form>
+
         <div className="form__container--input-radio">
           <p className="form__input-radio-title">Choose route optimization:</p>
           <div className="form__container--input-radio-buttons">
@@ -78,12 +100,7 @@ class FormView extends Component {
             <label className="form__radio-input" htmlFor="form__radio-shortest">Short</label>
           </div>
         </div>
-        <button
-          className="form__btn btn-submit"
-          onClick={this.handleClick}
-        >
-          Show best route
-        </button>
+
         <FormErrorsView/>
         <DestinationsList/>
       </div>

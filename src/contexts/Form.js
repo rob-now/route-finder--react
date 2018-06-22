@@ -34,7 +34,7 @@ export class FormProvider extends Component {
 
       if (this.state.destination.trim() === '') {
         this.setState({
-          formError: new Error('Destination cannot be empty.')
+          formError: new Error('Destination cannot be empty')
         })
         return
       }
@@ -78,14 +78,14 @@ export class FormProvider extends Component {
 
       if (startingPoint.trim() === '') {
         this.setState({
-          formError: new Error('Starting point cannot be empty.')
+          formError: new Error('Starting point cannot be empty')
         })
         return
       }
 
       if (optimization.trim() === '') {
         this.setState({
-          formError: new Error('You have to choose route optimization (fast or short).')
+          formError: new Error('You have to choose route optimization (fast or short)')
         })
         return
       }
